@@ -8,7 +8,7 @@ let numberOfCurrentGuess = 0;
 let currentGuess = [];
 let nextLetter = 0;
 
-let rightGuessString = 'asdfghj'
+let rightGuessString = 'asdfghjklyxcvbn'
 
 console.log(rightGuessString);
 
@@ -169,10 +169,6 @@ const animateCSS = (element, animation, prefix = "animate__") =>
   });
 
 document.addEventListener("keyup", (e) => {
-  if (guessesRemaining === 0) {
-    return;
-  }
-
   let pressedKey = String(e.key);
   if (pressedKey === "Backspace" && nextLetter !== 0) {
     deleteLetter();
