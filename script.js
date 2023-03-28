@@ -1,7 +1,10 @@
 
-const NUMBER_OF_GUESSES = 8;
-const NUMBER_OF_LETTERS = 7;
-let guessesRemaining = NUMBER_OF_GUESSES;
+const NUMBER_OF_LETTERS = 15;
+const NUMBER_OF_GUESSES_START = 3;
+//let NUMBER_OF_GUESSES = 8;
+//let guessesRemaining = NUMBER_OF_GUESSES;
+
+let numberOfCurrentGuess = 0;
 let currentGuess = [];
 let nextLetter = 0;
 
@@ -12,7 +15,7 @@ console.log(rightGuessString);
 function initBoard() {
   let board = document.getElementById("game-board");
 
-  for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
+    for (let i = 0; i < NUMBER_OF_GUESSES_START; i++) {
     let row = document.createElement("div");
     row.className = "letter-row";
 
@@ -24,6 +27,22 @@ function initBoard() {
 
     board.appendChild(row);
   }
+}
+
+function nextGuess() {
+    let board = document.getElementById("game-board");
+
+    let row = document.createElement("div");
+    row.className = "letter-row";
+
+    for (let j = 0; j < NUMBER_OF_LETTERS; j++) {
+        let box = document.createElement("div");
+        box.className = "letter-box";
+        row.appendChild(box);
+    }
+
+    board.appendChild(row);
+    numberOfCurrentGuess++;
 }
 
 function shadeKeyBoard(letter, color) {
@@ -45,7 +64,7 @@ function shadeKeyBoard(letter, color) {
 }
 
 function deleteLetter() {
-  let row = document.getElementsByClassName("letter-row")[NUMBER_OF_GUESSES - guessesRemaining];
+  let row = document.getElementsByClassName("letter-row")[numberOfCurrentGuess];
   let box = row.children[nextLetter - 1];
   box.textContent = "";
   box.classList.remove("filled-box");
@@ -54,7 +73,7 @@ function deleteLetter() {
 }
 
 function checkGuess() {
-  let row = document.getElementsByClassName("letter-row")[NUMBER_OF_GUESSES - guessesRemaining];
+  let row = document.getElementsByClassName("letter-row")[numberOfCurrentGuess];
   let guessString = "";
   let rightGuess = Array.from(rightGuessString);
 
@@ -105,17 +124,12 @@ function checkGuess() {
 
   if (guessString === rightGuessString) {
     toastr.success("You guessed right! Game over!");
-    guessesRemaining = 0;
+      numberOfCurrentGuess = 0;
     return;
   } else {
-    guessesRemaining -= 1;
     currentGuess = [];
     nextLetter = 0;
-
-    if (guessesRemaining === 0) {
-      toastr.error("You've run out of guesses! Game over!");
-      toastr.info(`The right word was: "${rightGuessString}"`);
-    }
+    nextGuess();
   }
 }
 
@@ -125,7 +139,7 @@ function insertLetter(pressedKey) {
   }
   pressedKey = pressedKey.toLowerCase();
 
-  let row = document.getElementsByClassName("letter-row")[NUMBER_OF_GUESSES - guessesRemaining];
+  let row = document.getElementsByClassName("letter-row")[numberOfCurrentGuess];
   let box = row.children[nextLetter];
   animateCSS(box, "pulse");
   box.textContent = pressedKey;
