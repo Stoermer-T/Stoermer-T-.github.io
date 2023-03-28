@@ -41,8 +41,12 @@ h1 {
   display: flex;
 }
 
+.number-row {
+    margin-bottom: 0.5rem;
+}
+
 .second-row {
-  margin: 0.5rem 0;
+    margin: 0.5rem 0;
 }
 
 .keyboard-button {

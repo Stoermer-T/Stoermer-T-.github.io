@@ -1,8 +1,6 @@
 
 const NUMBER_OF_LETTERS = 15;
-const NUMBER_OF_GUESSES_START = 3;
-//let NUMBER_OF_GUESSES = 8;
-//let guessesRemaining = NUMBER_OF_GUESSES;
+const NUMBER_OF_GUESSES_START = 2;
 
 let numberOfCurrentGuess = 0;
 let currentGuess = [];
@@ -86,7 +84,7 @@ function checkGuess() {
     return;
   }
 
-  var letterColor = ["gray", "gray", "gray", "gray", "gray"];
+  var letterColor = Array(NUMBER_OF_LETTERS).fill("gray");
 
   //check green
   for (let i = 0; i < NUMBER_OF_LETTERS; i++) {
@@ -180,7 +178,7 @@ document.addEventListener("keyup", (e) => {
     return;
   }
 
-  let found = pressedKey.match(/[a-z]/gi);
+  let found = pressedKey.match(/[a-z0-9]/gi);
   if (!found || found.length > 1) {
     return;
   } else {
