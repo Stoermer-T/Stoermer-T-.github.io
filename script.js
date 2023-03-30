@@ -1,3 +1,4 @@
+import { Crypt, RSA } from 'hybrid-crypto-js';
 
 const NUMBER_OF_LETTERS = 15;
 const NUMBER_OF_GUESSES_START = 2;
