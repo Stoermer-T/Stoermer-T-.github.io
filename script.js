@@ -6,7 +6,10 @@ let numberOfCurrentGuess = 0;
 let currentGuess = [];
 let nextLetter = 0;
 
-let rightGuessString = 'asdfghjklyxcvbn'
+let rightGuessString = 'asdfg12345qwert'
+
+let salt = [0x5b, 0x8c, 0x2a, 0x4f, 0x80, 0xaf, 0x25, 0x78, 0xf2, 0x9b, 0x12, 0xbf, 0xc2, 0x6a, 0xe9, 0x5d, 0xdd, 0x4e, 0x95, 0xaa, 0xcf, 0x7a, 0xd6, 0xa9]
+let passphrase = ''
 
 console.log(rightGuessString);
 
@@ -129,6 +132,12 @@ function checkGuess() {
     nextLetter = 0;
     nextGuess();
   }
+}
+
+function encryptLetter(letter, index) {
+    let crypt = new Crypt();
+    let salted = letter * salt[index].toString(7);
+    return crypt.encrypt(publicRsaKey, salted);
 }
 
 function insertLetter(pressedKey) {
