@@ -14,7 +14,24 @@ let nextLetter = 0;
 //let rightGuessString = 'asdfg12345qwert'
 
 let salt = [0x5b, 0x8c, 0x2a, 0x4f, 0x80, 0xaf, 0x25, 0x78, 0xf2, 0x9b, 0x12, 0xbf, 0xc2, 0x6a, 0xe9, 0x5d, 0xdd, 0x4e, 0x95, 0xaa, 0xcf, 0x7a, 0xd6, 0xa9]
-let passphrase = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+let passphrase =
+    [
+        "Fb5lLUngQqLrcBD2nmwDru0Chao9YPmEPJL2wilZsOsqzrvxZpHg81gndQvqXWq7fiNNRqo80yqUxYzZafuguiaRtQ4BESzb3atz3HD2oDQ7IIlokG8UmOOvQRpCqQb0bc7D2oEJ1SHC2ixpfiq/52Km57sZ/5M2Mh5UQQ0ebXE=",
+        "HY+hE38Dt2YaB7KBu4VjUvLZrdzfXy/bp8m0RqeZZjieCwHi/BkdwKGCzPf3VJ4vUgGky8ZCZOtl3SjU2L+16k8NIm6ZYtZ3+HUm8qu0Xd+CcsSMiVvHihMyb1exA4e6KeaGWUn05Zbh8x5PNTw8YTI8PEWWWQdCUZLIugLmHr8=",
+        "KmNxxf6sCPwcYRDvM3PIff/diRhzXB+fVQW2kG8mY7VZ16dMTBGySdXO6kLInAvdpslW2ZxJLtbf9h4Vr4TflZX5TnVtnvJawcTlgXRdwBUA0zT1auSHDOlvF8LGvccyqWv/sIfVds0pIPUEVsOl+uCXP8gaijg7R6tMEiKdasY=",
+        "bTWyIiQMl850tSrJoA66i0ulU9plgyH1TbVKTpKw1ldizBOJqalGx5hNd7n6+7jQObELP7YknyBwuBRIBB6Kdy/JzKzIf+OJcdmE4LLl4bTT4ymDW9XWJNfbDa5k4Vru0EbzuCt49YAjZoSE3j3TK4ZL7Ns0Y0PWjFaevma4lkM=",
+        "dRA9uWMPEb2Bz6XLOyntU7qnXAMVv+bBsABz8d1EGFt5cZKPzFIepwBJ64Usfx6kM8PKHgSaUrlK282uPzZ9REXhos+m+LYrDkfb4Ui4fcucffdQ6DMeuHfjvDmGSi11W/QbSGqbD925z31VGIxNgdgy3KAE3vF7vgK6xErISFw=",
+        "GfLvdfqYcF2hxICo/Qrsbnr0wRQHSBWeB5vyBdBEjblDJllOzkF+Tkdi3qLX7FoFXPkmFQZOG+cjbr6F85zV0X+kRgRXFLjZsjmYNxWWHNdLCwNfGA7ibM/kZEGMaLOyt5O32ci0QUL6VQzjBcgwY/vRh1WBaUwk2rOK0HICh3U=",
+        "AZyJhuJaqRGAj/xAkfSfFIfUfp/wj7d2l+HAvQ/loSkfsCIFOD83fm4ORwcgcYx0TxYLXm5Ipd3DcNLxsod0DrvGzz9XBaVykSmkUkPbMHRseyxpsA+zO2XZZYl8ddILB1hzJ5nYzXGt0awQy1YUb9oZ3riO70cCBclWq0j7QsU=",
+        "eVHczh15qZvxOwTLyi9rKfl+2VtpFAD915tH18oyRvK0cpYqU1SFFy3LOreBw8ybUzxXx0pwz4kn/7hUooKprjks6+0oyYANWvuBwn9FK4oRMU8fA35Y5Dz9oCsyUCbM0owkBH5uGhO6ZT3LHkbyEDLC3mF189cxblBhb37RjEY=",
+        "JIgrDYZwo2u/C45GZzh6/OwXob1Gizcp4F1CDX4qOWoR0tckkvdPyAfwOmDydY6THouoPl23tEcQq8CZ6TCnF49aeuYlE7fl58B4ufxi9GsSACGa1P88uodExDhJEHXGAidkhHegOR7+s+uxrIPL3MwKIum2+WnI0HlsF2mdzNU=",
+        "B1RlUGcceeIxNjYhYWnxKdPfnraB4lUBes3hHK7q/4FOYRokFE65VuWSiO2UK2Ntrn2p997GBRbQbH/KNGStWla2p9CaahOuyVamPSOQUApZlQ775I3bovZQZ2qlwQgsoCKfke3tqLM/V+3a/XmIo5EkkJWrt6HKmL6E8ZpxHz8=",
+        "hi8z6i9svv3SmDXjx/V/ktqu1ka/FKaMmjJcT65VJVhkcAZFIKRjEPog7Q9g8VOuZpycSDEgHYaH29Wvl0+obTvPtGB7jvqFphH62iowO5qMnhFxns5dY9Z2tlUe2XkA6OWy7YlMrBJW973yArJwcQIlUKys7U751unSwM/1lCQ=",
+        "FVzLmtWpuFJxSqkRE8MMFq7OPK0b2DDj9eDd/ADg97EeEZ2czxMZl8Q9GBjSEoOQs3v7uj7+VctJSkIaT3JoRmrcypr7+mPNB/77SLkpgsJWG7KWnyBLloDgJgNcdpAO1DrTW61GaOFG4kY5LWNSfFmeZSXbrZA9ilm9cevsSZ8=",
+        "fcmLCjx9jlf0AAaYjdTLWE+9n+2NhTEj9xttmsSf4E5eC1NNXYlw042XBXh9yqETBwL7zhXd/TVGdU2uhlSx5wFjCBOsvXP55tClisNTfA+z5dHmcvgni6zAdJ8PF4VcPEN9XDYZSezwjTFux8QanF1r9FVYFIeeflTl1a4YY6I=",
+        "GmDTWvg3qx2WKx8DMNyFiYTfvVXk28jVX7E8yiZYn+SQrl+wsv8ogfMkXWPuDmCpEh9GrCoBkQY0Sy/w49f4KVOGS0zIbGoDYAllyWHQv/GIBaS4MCwBawsi/Vcp24FhSISwFlqoB3ts0MRZJ39NZf6fqNp2XDpL+oTfloUUJDg=",
+        "W1X57i9MYWzg1R2Jw2ZEYM1cGFj1FxJ/Rm9eJIi6WPxclJ8G6DFxKkIp5m9/V9l8j2and4ACxJV/4lVPalOm6kb+NBfO8f6c1jeAZPGFn7QKn99ZVcn/rbP6U6iGnspKiSza9Z7u0+8g6QEMhz0WIQg6GrZPS7bFj0wVZpsJpS4=",
+    ]
 
 
 //console.log(rightGuessString);
