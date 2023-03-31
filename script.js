@@ -13,13 +13,13 @@ let numberOfCurrentGuess = 0;
 let currentGuess = [];
 let nextLetter = 0;
 
-let rightGuessString = 'asdfg12345qwert'
+//let rightGuessString = 'asdfg12345qwert'
 
 let salt = [0x5b, 0x8c, 0x2a, 0x4f, 0x80, 0xaf, 0x25, 0x78, 0xf2, 0x9b, 0x12, 0xbf, 0xc2, 0x6a, 0xe9, 0x5d, 0xdd, 0x4e, 0x95, 0xaa, 0xcf, 0x7a, 0xd6, 0xa9]
-let passphrase = ['', '', '', '']
+let passphrase = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
 
-console.log(rightGuessString);
+//console.log(rightGuessString);
 
 function initBoard() {
     let board = document.getElementById("game-board");
@@ -83,14 +83,8 @@ function deleteLetter() {
 
 function checkGuess() {
     let row = document.getElementsByClassName("letter-row")[numberOfCurrentGuess];
-    let guessString = "";
-    let rightGuess = Array.from(rightGuessString);
 
-    for (const val of currentGuess) {
-        guessString += val;
-    }
-
-    if (guessString.length != NUMBER_OF_LETTERS) {
+    if (currentGuess.length != NUMBER_OF_LETTERS) {
         toastr.error("Not enough letters!");
         return;
     }
@@ -99,9 +93,9 @@ function checkGuess() {
 
     //check green
     for (let i = 0; i < NUMBER_OF_LETTERS; i++) {
-        if (rightGuess[i] == currentGuess[i]) {
+        if ( encryptLetter(currentGuess[i], i) == passphrase[i]) {
             letterColor[i] = "green";
-            rightGuess[i] = "#";
+            passphrase[i] = "#";
         }
     }
 
@@ -112,9 +106,9 @@ function checkGuess() {
 
         //checking right letters
         for (let j = 0; j < NUMBER_OF_LETTERS; j++) {
-            if (rightGuess[j] == currentGuess[i]) {
+            if (passphrase[j] == encryptLetter(currentGuess[i], i)) {
                 letterColor[i] = "yellow";
-                rightGuess[j] = "#";
+                passphrase[j] = "#";
             }
         }
     }
@@ -127,11 +121,11 @@ function checkGuess() {
             animateCSS(box, "flipInX");
             //shade box
             box.style.backgroundColor = letterColor[i];
-            shadeKeyBoard(guessString.charAt(i) + "", letterColor[i]);
+            shadeKeyBoard(currentGuess[i], letterColor[i]);
         }, delay);
     }
 
-    if (guessString === rightGuessString) {
+    if (false /*guessString === rightGuessString*/) {
         toastr.success("You guessed right! Game over!");
         numberOfCurrentGuess = 0;
         return;
