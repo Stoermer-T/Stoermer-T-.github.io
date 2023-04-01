@@ -93,7 +93,7 @@ function deleteLetter() {
 }
 
 async function checkGuess() {
-    if (nextLetter === NUMBER_OF_LETTERS) {
+    if (numberOfCurrentGuess === -1) {
         return;
     }
 
@@ -151,7 +151,7 @@ async function checkGuess() {
         } else {
             toastr.success("Was du hast " + (numberOfCurrentGuess + 1) + " Versuche gebraucht? Mein Gott ist das schlecht.");
         }
-        numberOfCurrentGuess = 0;
+        numberOfCurrentGuess = -1;
         return;
     } else {
         currentGuess = [];
