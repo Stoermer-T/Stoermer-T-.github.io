@@ -93,6 +93,10 @@ function deleteLetter() {
 }
 
 async function checkGuess() {
+    if (nextLetter === NUMBER_OF_LETTERS) {
+        return;
+    }
+
     let row = document.getElementsByClassName("letter-row")[numberOfCurrentGuess];
 
     if (currentGuess.length != NUMBER_OF_LETTERS) {
@@ -140,9 +144,9 @@ async function checkGuess() {
     }
 
     if (solved) {
-        if (numberOfCurrentGuess = 0) {
+        if (numberOfCurrentGuess < 2) {
             toastr.error("Nah, offensichtlich gecheatet. Meinst du das merke ich nicht???");
-        } else if (numberOfCurrentGuess < 3) {
+        } else if (numberOfCurrentGuess < 4) {
             toastr.success("" + (numberOfCurrentGuess + 1) + " Versuche. Gerade noch so akzeptabel.");
         } else {
             toastr.success("Was du hast " + (numberOfCurrentGuess + 1) + " Versuche gebraucht? Mein Gott ist das schlecht.");
