@@ -125,13 +125,14 @@ async function checkGuess() {
         }
     }
 
+    let colorGuess = [...currentGuess];
     for (let i = 0; i < NUMBER_OF_LETTERS; i++) {
         let box = row.children[i];
         let delay = 250 * i;
         setTimeout(() => {
             animateCSS(box, "flipInX");
             box.style.backgroundColor = letterColor[i];
-            shadeKeyBoard(currentGuess[i], letterColor[i]);
+            shadeKeyBoard(colorGuess[i], letterColor[i]);
         }, delay);
     }
 
