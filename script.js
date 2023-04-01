@@ -1,20 +1,15 @@
 const NUMBER_OF_LETTERS = 15;
 const NUMBER_OF_GUESSES_START = 2;
 
+// Nice Try HAHAHAHA; salted HMAC SHA-256 makes BRRRRR.
 const PUBLIC_KEY =
     "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCXyrk+U3FO2HEXsE+0jXAuWCoZ\n"
   + "XERXGQIBXqQfX73OsSfIgym+2Vet6h3b8kqc0XCKvyHHUUPxubFrGw85oA54BkVA\n"
   + "l5DRAr50H+IGKNkjd3JVDWIHxTfhKM8xhvxNsGIDdnxZ/3DL+AAQ+TLnYW7Qxz11\n"
   + "XUyvTzFFdBv435iixQIDAQAB"
 
-let numberOfCurrentGuess = 0;
-let currentGuess = [];
-let nextLetter = 0;
-
-//let rightGuessString = 'asdfg12345qwert'
-
 const salt = [0x5b, 0x8c, 0x2a, 0x4f, 0x80, 0xaf, 0x25, 0x78, 0xf2, 0x9b, 0x12, 0xbf, 0xc2, 0x6a, 0xe9, 0x5d, 0xdd, 0x4e, 0x95, 0xaa, 0xcf, 0x7a, 0xd6, 0xa9]
-let passphrase =
+const passphrase =
     [
         "01HXdHRwuPQoQ9D7oFRadRmUhHlWm7s3/lnrxW8M4/U=",
         "AucEESQP0f6s3s2cTWClZQsPdb0ts4+7jBLlFcHK8N0=",
@@ -33,8 +28,9 @@ let passphrase =
         "pLnTqfVNOhRKGygcfptXJNr0EYxcy38FwTCFcKAS/aM=",
     ]
 
-
-//console.log(rightGuessString);
+let numberOfCurrentGuess = 0;
+let currentGuess = [];
+let nextLetter = 0;
 
 function initBoard() {
     let board = document.getElementById("game-board");
@@ -100,14 +96,13 @@ async function checkGuess() {
     let row = document.getElementsByClassName("letter-row")[numberOfCurrentGuess];
 
     if (currentGuess.length != NUMBER_OF_LETTERS) {
-        toastr.error("Not enough letters!");
+        toastr.error("Du musst halt schon " + NUMBER_OF_LETTERS + " Zeichen eingeben....");
         return;
     }
 
     var letterColor = Array(NUMBER_OF_LETTERS).fill("gray");
     var tempPhrase = [...passphrase];
 
-    //check green
     for (let i = 0; i < NUMBER_OF_LETTERS; i++) {
         if (await encryptLetter(currentGuess[i], i) == tempPhrase[i]) {
             letterColor[i] = "green";
@@ -115,12 +110,9 @@ async function checkGuess() {
         }
     }
 
-    //check yellow
-    //checking guess letters
     for (let i = 0; i < NUMBER_OF_LETTERS; i++) {
         if (letterColor[i] == "green") continue;
 
-        //checking right letters
         for (let j = 0; j < NUMBER_OF_LETTERS; j++) {
             if (tempPhrase[j] == await encryptLetter(currentGuess[i], j)) {
                 letterColor[i] = "yellow";
@@ -133,16 +125,28 @@ async function checkGuess() {
         let box = row.children[i];
         let delay = 250 * i;
         setTimeout(() => {
-            //flip box
             animateCSS(box, "flipInX");
-            //shade box
             box.style.backgroundColor = letterColor[i];
             shadeKeyBoard(currentGuess[i], letterColor[i]);
         }, delay);
     }
 
-    if (false /*guessString === rightGuessString*/) {
-        toastr.success("You guessed right! Game over!");
+    let solved = true;
+    for (let i = 0; i < NUMBER_OF_LETTERS; i++) {
+        if (tempPhrase[i] != '#') {
+            solved = false;
+            break;
+        }
+    }
+
+    if (solved) {
+        if (numberOfCurrentGuess = 0) {
+            toastr.error("Nah, offensichtlich gecheatet. Meinst du das merke ich nicht???");
+        } else if (numberOfCurrentGuess < 3) {
+            toastr.success("" + (numberOfCurrentGuess + 1) + " Versuche. Gerade noch so akzeptabel.");
+        } else {
+            toastr.success("Was du hast " + (numberOfCurrentGuess + 1) + " Versuche gebraucht? Mein Gott ist das schlecht.");
+        }
         numberOfCurrentGuess = 0;
         return;
     } else {
@@ -180,16 +184,13 @@ function insertLetter(pressedKey) {
 }
 
 const animateCSS = (element, animation, prefix = "animate__") =>
-    // We create a Promise and return it
     new Promise((resolve, reject) => {
         const animationName = `${prefix}${animation}`;
-        // const node = document.querySelector(element);
         const node = element;
         node.style.setProperty("--animate-duration", "0.3s");
 
         node.classList.add(`${prefix}animated`, animationName);
 
-        // When the animation ends, we clean the classes and resolve the Promise
         function handleAnimationEnd(event) {
             event.stopPropagation();
             node.classList.remove(`${prefix}animated`, animationName);
