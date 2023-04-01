@@ -138,7 +138,7 @@ async function checkGuess() {
 
     let solved = true;
     for (let i = 0; i < NUMBER_OF_LETTERS; i++) {
-        if (tempPhrase[i] != '#') {
+        if (tempPhrase[i] != "G") {
             solved = false;
             break;
         }
