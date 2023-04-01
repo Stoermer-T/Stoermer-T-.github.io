@@ -105,12 +105,13 @@ async function checkGuess() {
     }
 
     var letterColor = Array(NUMBER_OF_LETTERS).fill("gray");
+    var tempPhrase = passphrase;
 
     //check green
     for (let i = 0; i < NUMBER_OF_LETTERS; i++) {
-        if ( await encryptLetter(currentGuess[i], i) == passphrase[i]) {
+        if (await encryptLetter(currentGuess[i], i) == tempPhrase[i]) {
             letterColor[i] = "green";
-            passphrase[i] = "#";
+            tempPhrase[i] = "#";
         }
     }
 
@@ -121,9 +122,9 @@ async function checkGuess() {
 
         //checking right letters
         for (let j = 0; j < NUMBER_OF_LETTERS; j++) {
-            if (passphrase[j] == await encryptLetter(currentGuess[i], i)) {
+            if (tempPhrase[j] == await encryptLetter(currentGuess[i], i)) {
                 letterColor[i] = "yellow";
-                passphrase[j] = "#";
+                tempPhrase[j] = "#";
             }
         }
     }
