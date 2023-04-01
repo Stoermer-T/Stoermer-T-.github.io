@@ -157,7 +157,7 @@ async function encryptLetter(letter, index) {
     let alg = { name: "HMAC", hash: "SHA-256" };
 
     let key = await crypto.subtle.importKey("raw", enc.encode(PUBLIC_KEY), alg, false, ["sign"]);
-    let signature = await crypto.subtle.sign(algorithm.name, key, enc.encode(salted));
+    let signature = await crypto.subtle.sign(alg.name, key, enc.encode(salted));
     let digest = btoa(String.fromCharCode(...new Uint8Array(signature)));
 
     return digest;
