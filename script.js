@@ -122,7 +122,7 @@ async function checkGuess() {
 
         //checking right letters
         for (let j = 0; j < NUMBER_OF_LETTERS; j++) {
-            if (tempPhrase[j] == await encryptLetter(currentGuess[i], i)) {
+            if (tempPhrase[j] == await encryptLetter(currentGuess[i], j)) {
                 letterColor[i] = "yellow";
                 tempPhrase[j] = "#";
             }
