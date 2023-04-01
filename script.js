@@ -1,7 +1,7 @@
 const NUMBER_OF_LETTERS = 15;
 const NUMBER_OF_GUESSES_START = 2;
 
-const RSA_PUBLIC_KEY =
+const PUBLIC_KEY =
     "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCXyrk+U3FO2HEXsE+0jXAuWCoZ\n"
   + "XERXGQIBXqQfX73OsSfIgym+2Vet6h3b8kqc0XCKvyHHUUPxubFrGw85oA54BkVA\n"
   + "l5DRAr50H+IGKNkjd3JVDWIHxTfhKM8xhvxNsGIDdnxZ/3DL+AAQ+TLnYW7Qxz11\n"
@@ -13,7 +13,7 @@ let nextLetter = 0;
 
 //let rightGuessString = 'asdfg12345qwert'
 
-let salt = [0x5b, 0x8c, 0x2a, 0x4f, 0x80, 0xaf, 0x25, 0x78, 0xf2, 0x9b, 0x12, 0xbf, 0xc2, 0x6a, 0xe9, 0x5d, 0xdd, 0x4e, 0x95, 0xaa, 0xcf, 0x7a, 0xd6, 0xa9]
+const salt = [0x5b, 0x8c, 0x2a, 0x4f, 0x80, 0xaf, 0x25, 0x78, 0xf2, 0x9b, 0x12, 0xbf, 0xc2, 0x6a, 0xe9, 0x5d, 0xdd, 0x4e, 0x95, 0xaa, 0xcf, 0x7a, 0xd6, 0xa9]
 let passphrase =
     [
         "Fb5lLUngQqLrcBD2nmwDru0Chao9YPmEPJL2wilZsOsqzrvxZpHg81gndQvqXWq7fiNNRqo80yqUxYzZafuguiaRtQ4BESzb3atz3HD2oDQ7IIlokG8UmOOvQRpCqQb0bc7D2oEJ1SHC2ixpfiq/52Km57sZ/5M2Mh5UQQ0ebXE=",
@@ -96,7 +96,7 @@ function deleteLetter() {
     nextLetter -= 1;
 }
 
-function checkGuess() {
+async function checkGuess() {
     let row = document.getElementsByClassName("letter-row")[numberOfCurrentGuess];
 
     if (currentGuess.length != NUMBER_OF_LETTERS) {
@@ -108,7 +108,7 @@ function checkGuess() {
 
     //check green
     for (let i = 0; i < NUMBER_OF_LETTERS; i++) {
-        if ( encryptLetter(currentGuess[i], i) == passphrase[i]) {
+        if ( await encryptLetter(currentGuess[i], i) == passphrase[i]) {
             letterColor[i] = "green";
             passphrase[i] = "#";
         }
@@ -121,7 +121,7 @@ function checkGuess() {
 
         //checking right letters
         for (let j = 0; j < NUMBER_OF_LETTERS; j++) {
-            if (passphrase[j] == encryptLetter(currentGuess[i], i)) {
+            if (passphrase[j] == await encryptLetter(currentGuess[i], i)) {
                 letterColor[i] = "yellow";
                 passphrase[j] = "#";
             }
@@ -151,12 +151,16 @@ function checkGuess() {
     }
 }
 
-function encryptLetter(letter, index) {
-    let jsEncrypt = new JSEncrypt();
-    jsEncrypt.setPublicKey(RSA_PUBLIC_KEY);
-
+async function encryptLetter(letter, index) {
+    let enc = new TextEncoder("utf-8");
     let salted = letter.charCodeAt(0) * salt[index];
-    return jsEncrypt.encrypt(salted);
+    let alg = { name: "HMAC", hash: "SHA-256" };
+
+    let key = await crypto.subtle.importKey("raw", enc.encode(PUBLIC_KEY), alg, false, ["sign"]);
+    let signature = await crypto.subtle.sign(algorithm.name, key, enc.encode(salted));
+    let digest = btoa(String.fromCharCode(...new Uint8Array(signature)));
+
+    return digest;
 }
 
 function insertLetter(pressedKey) {
