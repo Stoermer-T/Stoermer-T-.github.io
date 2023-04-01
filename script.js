@@ -105,7 +105,7 @@ async function checkGuess() {
     }
 
     var letterColor = Array(NUMBER_OF_LETTERS).fill("gray");
-    var tempPhrase = passphrase;
+    var tempPhrase = [...passphrase];
 
     //check green
     for (let i = 0; i < NUMBER_OF_LETTERS; i++) {
