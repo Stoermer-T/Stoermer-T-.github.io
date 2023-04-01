@@ -12,20 +12,20 @@ const salt = [0x5b, 0x8c, 0x2a, 0x4f, 0x80, 0xaf, 0x25, 0x78, 0xf2, 0x9b, 0x12, 
 const passphrase =
     [
         "i6LjCDHf9w1oAA0GsCKzWObBqVhIymwKLV5uRA8o72E=",
-        "VHNz+c/e+Ill8EvnSWcqAOepv3VwqTyFR7HYSmxsAY0=",
-        "gZHMUBViTKh6YQ9sxg1s7O1BUDIqfi/PuWs79wEl4aA=",
-        "Md89jkYK/XrQT/xFGH3AGTEnhFtrx8shTZkXih4rUX0=",
-        "v9MGC9LNC7wdAWnkFJAuQF+ko+txaks1+6O/c4MKoAc=",
-        "odeS7KmHnyC3k8SNA+nSMSiPzmh3Vsvfi17kAI/UDVk=",
-        "mxkF45jdSvDLJG3UWwp0ZlOHgeKFmD/vJIdDOstCPAQ=",
-        "4jM9gzbpyCC7ElAQSgKOQAitABwU3ry9uRy6ZQJBmNQ=",
-        "Odc1KshezU869HfEK2ghWLQBrvg3+yQ0eQtIIdriJuQ=",
-        "K+83403Qb3oUkll/BBjs27TTqN47FyhBpIdTX5tyLdo=",
-        "AhHsQwmtBCIC4PnU/4HacrfTeGaHrjk+A2QOpKBN688=",
-        "cs7bQnbtedjdkEGeqzGIfMAMpOQMyJds3BETYYJbl0g=",
-        "M6Hzv/ZhdPeTNK128gLmdv5vqflQlmzoYfTkT0LzgX4=",
-        "1KPxA8Bfzdgzr2vSXrlOyEL0p26tzlIHkVPnxBDZVy0=",
-        "MjyDcsz1NSyDMKLwMZf/u10rvKrfYFIeWz4Xv8Rtffk=",
+        "5shGtxV5++K6+9vqt9smcksrQQgUGSX2+utmX52kWKU=",
+        "dYey1XMMiO4BisdDafLEMtocX2nul7qEHpN/TaGu4WE=",
+        "bRLJnkUtmCuUsibaFczyzdpam7kU7OlWOpzWZ6OBhx4=",
+        "mhjEBqH6wFM1r7uVdIpVJLDC5+I8jinJ8s1MHLaXVAQ=",
+        "XmxzKLNZKoSmN34HjfH67JaWLeVXOSdstacv+zxIsvI=",
+        "biMOKddF9Gi5Su9ImvCMRnDdrVklq39f/bxWvXalzgo=",
+        "5shGtxV5++K6+9vqt9smcksrQQgUGSX2+utmX52kWKU=",
+        "p3Dnt/iTMiKgEFqYSCcwtlddnmzZ9joJZZhMpkDt0ZQ=",
+        "MpPmX0L4BEcZql+Jf5aQJOuYuSqQT99jbQw3xit5xNM=",
+        "PHVIOr5SF4crs6eSeCSXPNRAhg04c8F3BbyujuTD7Uc=",
+        "wGWPf35h3t6H1b3YB0IBeCkdgY8hPOsWTA1QT7w52+g=",
+        "reG3/+pT+SOOMU1TGGD1gqKMkE52b4/SvZEBuUTpN2s=",
+        "l1oySXW934FcuAAri/BCDV9L5umroL5uS0WOSNJ4fec=",
+        "5HE4QNatmnKzebGFAELw2q6P2gzU4on9tN2JBIOf+yo=",
     ]
 
 let numberOfCurrentGuess = 0;
@@ -147,7 +147,7 @@ async function checkGuess() {
     if (solved) {
         if (numberOfCurrentGuess < 2) {
             toastr.error("Nah, offensichtlich gecheatet. Meinst du das merke ich nicht???");
-        } else if (numberOfCurrentGuess < 5) {
+        } else if (numberOfCurrentGuess < 7) {
             toastr.success("" + (numberOfCurrentGuess + 1) + " Versuche. Gerade noch so akzeptabel.");
         } else {
             toastr.success("Was du hast " + (numberOfCurrentGuess + 1) + " Versuche gebraucht? Mein Gott ist das schlecht.");
